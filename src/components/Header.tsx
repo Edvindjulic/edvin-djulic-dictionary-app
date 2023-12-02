@@ -11,16 +11,14 @@ export default function Header({ onOpen, btnRef }: HeaderProps) {
   const { colorMode, toggleColorMode } = useColorMode();
   const buttonText = colorMode === "light" ? "Dark" : "Light";
   return (
-    <HStack h={"80px"} m={5} justify={"center"}>
+    <HStack p={5} justify={"center"} alignItems={"center"}>
       <SubmitSearch />
-      <HStack>
-        <Button ref={btnRef} onClick={onOpen}>
-          Show favorite words
-        </Button>
-        <Button variant={"solid"} onClick={toggleColorMode}>
-          {buttonText} Mode
-        </Button>
-      </HStack>
+      <Button ref={btnRef} onClick={onOpen}>
+        Show favorite words
+      </Button>
+      <Button variant={"solid"} onClick={toggleColorMode}>
+        {buttonText} Mode
+      </Button>
     </HStack>
   );
 }

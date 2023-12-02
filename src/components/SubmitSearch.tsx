@@ -39,7 +39,7 @@ export default function SubmitSearch() {
     <VStack>
       <HStack>
         <FormControl isInvalid={!!formik.errors.word}>
-          <VStack>
+          <VStack position={'relative'}>
             <Input
               variant={"outline"}
               placeholder={"Search for a word"}
@@ -50,7 +50,7 @@ export default function SubmitSearch() {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
             />
-            {formik.errors.word && <Text>{formik.errors.word}</Text>}
+            {formik.errors.word && <Text position="absolute" bottom="-25px">{formik.errors.word}</Text>}
           </VStack>
         </FormControl>
         <Box>
