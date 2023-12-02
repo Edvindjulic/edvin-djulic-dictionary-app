@@ -6,7 +6,9 @@ export default function Header() {
   return (
     <HStack h={"80px"} m={5}>
       <SubmitSearch />
-      <Button onClick={toggleColorMode}>Toggle theme</Button>
+      <Button variant={"solid"} onClick={toggleColorMode}>
+        Toggle theme
+      </Button>
     </HStack>
   );
 }

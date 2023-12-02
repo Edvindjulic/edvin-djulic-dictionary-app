@@ -108,7 +108,7 @@ const components = {
       outline: {
         field: {
           borderColor: "inp-border",
-          borderWidth: '2px',
+          borderWidth: "2px",
           _hover: {
             borderColor: "inp-hover-border",
           },
