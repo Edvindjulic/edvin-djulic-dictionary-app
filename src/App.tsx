@@ -1,11 +1,10 @@
-import { Text, VStack } from "@chakra-ui/react";
+import { Stack } from "@chakra-ui/react";
+import Header from "./components/Header";
 
 export default function App() {
   return (
-    <>
-      <VStack>
-        <Text>Hejsan</Text>
-      </VStack>
-    </>
+    <Stack>
+      <Header />
+    </Stack>
   );
 }
