@@ -3,7 +3,15 @@ import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { rest } from "msw";
 import { setupServer } from "msw/native";
-import { afterAll, beforeAll, describe, expect, test, vi } from "vitest";
+import {
+  afterAll,
+  afterEach,
+  beforeAll,
+  describe,
+  expect,
+  test,
+  vi,
+} from "vitest";
 import App from "../App";
 import SearchProvider from "../SearchContext";
 import mockWord from "./mockWord.json";
@@ -157,21 +165,67 @@ test("should be able to open up drawer for favorite words", async () => {
   expect(favoriteWords).toBeInTheDocument();
 });
 
-test("VG:should be able to save a word to favorite words", async () => {
-  render(
-    <SearchProvider>
-      <App />
-    </SearchProvider>
-  );
-  const input = screen.getByPlaceholderText("Search for a word");
-  await userEvent.type(input, "test");
-  await userEvent.click(screen.getByRole("button", { name: "Search" }));
-  const save = await screen.findByRole("button", { name: "Save" });
-  await userEvent.click(save);
-  await userEvent.click(
-    screen.getByRole("button", { name: "Show favorite words" })
-  );
-  const drawer = screen.getByRole("dialog");
-  expect(drawer).toBeVisible();
-  expect(within(drawer).getByText("test")).toBeInTheDocument();
+describe("VG:should be able to save a word to the session storage", () => {
+  test("should not display any listitem initially", async () => {
+    render(
+      <SearchProvider>
+        <App />
+      </SearchProvider>
+    );
+    await userEvent.click(
+      screen.getByRole("button", { name: "Show favorite words" })
+    );
+    const drawer = screen.getByRole("dialog");
+    expect(await within(drawer).findByRole("list")).toBeInTheDocument();
+    expect(within(drawer).queryByRole("listitem")).not.toBeInTheDocument();
+  });
+
+  test("should be able to save a word to favorite words", async () => {
+    render(
+      <SearchProvider>
+        <App />
+      </SearchProvider>
+    );
+    const input = screen.getByPlaceholderText("Search for a word");
+    await userEvent.type(input, "test");
+    await userEvent.click(screen.getByRole("button", { name: "Search" }));
+    const save = await screen.findByRole("button", { name: "Save" });
+    await userEvent.click(save);
+    await userEvent.click(
+      screen.getByRole("button", { name: "Show favorite words" })
+    );
+    const drawer = screen.getByRole("dialog");
+    expect(drawer).toBeVisible();
+    expect(within(drawer).getByText("test")).toBeInTheDocument();
+  });
+
+  test.only("should getItem from session storage", async () => {
+    const getItemSpy = vi.spyOn(Storage.prototype, "getItem");
+    afterEach(() => {
+      getItemSpy.mockRestore();
+      window.sessionStorage.clear();
+    });
+    render(
+      <SearchProvider>
+        <App />
+      </SearchProvider>
+    );
+    const input = screen.getByPlaceholderText("Search for a word");
+    await userEvent.type(input, "test");
+    await userEvent.click(screen.getByRole("button", { name: "Search" }));
+    const savedWord = mockWord[0];
+    getItemSpy.mockImplementation((key) => {
+      if (key === "savedWords") {
+        return JSON.stringify([savedWord]);
+      }
+      return null;
+    })
+    const save = await screen.findByRole("button", { name: "Save" });
+    await userEvent.click(save);
+
+    expect(getItemSpy).toHaveBeenCalledWith("savedWords");
+    const storedValue = window.sessionStorage.getItem("savedWords");
+    expect(storedValue).not.toBeNull();
+    expect(JSON.parse(storedValue!)).toEqual([savedWord]);
+  });
 });
