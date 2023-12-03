@@ -219,13 +219,48 @@ describe("VG:should be able to save a word to the session storage", () => {
         return JSON.stringify([savedWord]);
       }
       return null;
-    })
+    });
     const save = await screen.findByRole("button", { name: "Save" });
     await userEvent.click(save);
-
     expect(getItemSpy).toHaveBeenCalledWith("savedWords");
     const storedValue = window.sessionStorage.getItem("savedWords");
     expect(storedValue).not.toBeNull();
     expect(JSON.parse(storedValue!)).toEqual([savedWord]);
+  });
+
+  test("should be able to remove a word from favorite words", async () => {
+    const getItemSpy = vi.spyOn(Storage.prototype, "getItem");
+    afterEach(() => {
+      getItemSpy.mockRestore();
+      window.sessionStorage.clear();
+    });
+    render(
+      <SearchProvider>
+        <App />
+      </SearchProvider>
+    );
+    const input = screen.getByPlaceholderText("Search for a word");
+    await userEvent.type(input, "test");
+    await userEvent.click(screen.getByRole("button", { name: "Search" }));
+    getItemSpy.mockImplementation((key) => {
+      if (key === "savedWords") {
+        return "[]";
+      }
+      return null;
+    });
+    const save = await screen.findByRole("button", { name: "Save" });
+    await userEvent.click(save);
+    await userEvent.click(
+      screen.getByRole("button", { name: "Show favorite words" })
+    );
+    const drawer = screen.getByRole("dialog");
+    expect(drawer).toBeVisible();
+    expect(within(drawer).getByText("test")).toBeInTheDocument();
+    const remove = within(drawer).getByRole("button", { name: "Remove" });
+    await userEvent.click(remove);
+    expect(within(drawer).queryByText("test")).not.toBeInTheDocument();
+    expect(getItemSpy).toHaveBeenCalledWith("savedWords");
+    const storedValue = window.sessionStorage.getItem("savedWords");
+    expect(JSON.parse(storedValue!)).toEqual([]);
   });
 });
