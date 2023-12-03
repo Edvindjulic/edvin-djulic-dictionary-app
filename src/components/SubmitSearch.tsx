@@ -16,9 +16,12 @@ interface SearchValues {
   word: string;
 }
 
+// This component contains the form to submit a search.
 export default function SubmitSearch() {
+  // Using the useContext hook to access the fetchSearchResult function from the SearchContext.
   const { fetchSearchResult } = useContext(SearchContext);
-  //Validation schema
+  //Validation schema for the form
+  // Requires a word to be entered in the input
   const validationSchema = Yup.object({
     word: Yup.string().required("Required"),
   });
