@@ -38,7 +38,7 @@ export default function RenderSearchResult() {
                     <Heading as="h2">{searchResult[0].word}</Heading>
                     <Button
                       variant={"ghost"}
-                      onClick={() => saveWord(searchResult[0].word)}
+                      onClick={() => saveWord(searchResult[0])}
                     >
                       Save
                     </Button>

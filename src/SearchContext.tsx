@@ -1,6 +1,7 @@
 import { createContext, useState } from "react";
+import { useSessionStorageState } from "./useSessionStorage";
 
-interface SearchResult {
+export interface SearchResult {
   word: string;
   phonetic: string;
   phonetics: {
@@ -32,8 +33,8 @@ interface SearchResult {
 interface SearchContextValue {
   searchResult: SearchResult[] | null;
   fetchSearchResult: (word: string) => Promise<void>;
-  saveWord: (word: string) => void;
-  savedWords: string[];
+  saveWord: (word: SearchResult) => void;
+  savedWords: SearchResult[];
 }
 
 interface Props {
@@ -49,7 +50,10 @@ export const SearchContext = createContext<SearchContextValue>({
 
 export default function SearchProvider({ children }: Props) {
   const [searchResult, setSearchResult] = useState<SearchResult[] | null>(null);
-  const [savedWords, setSavedWords] = useState<string[]>([]);
+  const [savedWords, setSavedWords] = useSessionStorageState<SearchResult[]>(
+    [],
+    "savedWords"
+  );
 
   const fetchSearchResult = async (word: string) => {
     try {
@@ -66,8 +70,8 @@ export default function SearchProvider({ children }: Props) {
       setSearchResult([]);
     }
   };
-  const saveWord = (word: string) => {
-    if (!savedWords.includes(word)) {
+  const saveWord = (word: SearchResult) => {
+    if (!savedWords.some(savedWord => savedWord.word === word.word)) {
       setSavedWords([...savedWords, word]);
     }
   };

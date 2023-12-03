@@ -9,11 +9,12 @@ import {
   List,
   ListItem,
 } from "@chakra-ui/react";
+import { SearchResult } from "../SearchContext";
 
 interface DrawerProps {
   isOpen: boolean;
   onClose: () => void;
-  savedWords: string[];
+  savedWords: SearchResult[];
   children?: React.ReactNode;
 }
 
@@ -32,7 +33,7 @@ export default function FavoriteDrawer({
         <DrawerBody>
           <List>
             {savedWords.map((word, index) => (
-              <ListItem key={index}>{word}</ListItem>
+              <ListItem key={index}>{word.word}</ListItem>
             ))}
           </List>
         </DrawerBody>

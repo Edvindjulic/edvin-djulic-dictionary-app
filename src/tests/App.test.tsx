@@ -35,7 +35,7 @@ test("G:should display error when searching with empty value", async () => {
     <SearchProvider>
       <App />
     </SearchProvider>
-  )
+  );
   await userEvent.click(screen.getByRole("button", { name: "Search" }));
   const result = await screen.findByText("Required");
   expect(result).toBeInTheDocument();
