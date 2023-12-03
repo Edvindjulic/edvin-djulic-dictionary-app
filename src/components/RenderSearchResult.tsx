@@ -33,7 +33,7 @@ export default function RenderSearchResult() {
         searchResult &&
         audioSource && (
           <VStack w={"100%"}>
-            <VStack h={"100%"} w={"60%"} p={5} border={`1px solid ${bgColor}`}>
+            <VStack h={"100%"} w={"60%"} p={5}>
               <HStack>
                 <Heading as="h2">{searchResult[0].word}</Heading>
                 <Text fontSize="xl">
@@ -63,11 +63,11 @@ export default function RenderSearchResult() {
                 </Button>
               </HStack>
             </VStack>
-            <VStack h={"100%"} w={"60%"} border={`1px solid ${bgColor}`}>
+            <VStack h={'100vh'} w={"95%"} border={`1px solid ${bgColor}`}>
               <Tabs variant={"enclosed"} w={"100%"} align="center">
                 <TabList w={"100%"}>
                   {searchResult[0].meanings.map((meaning, index) => (
-                    <Tab key={index} w={"50%"}>
+                    <Tab key={index} w={"50%"} flex={1}>
                       {meaning.partOfSpeech}
                     </Tab>
                   ))}
@@ -80,7 +80,6 @@ export default function RenderSearchResult() {
                           <VStack
                             align="start"
                             key={definitionIndex}
-                            borderBottom={`1px solid ${bgColor}`}
                             p={1}
                           >
                             <Text>Definition: {definition.definition}</Text>
