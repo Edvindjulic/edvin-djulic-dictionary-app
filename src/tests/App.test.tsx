@@ -74,7 +74,7 @@ test("G:should display error message when no result is found", async () => {
 
 test("G:should be able to call play method on audio", async () => {
   //Test passes but doesnt check if audio actually plays
-  const spy = vi.spyOn(window.HTMLMediaElement.prototype, "play");
+  const spy = vi.spyOn(HTMLMediaElement.prototype, "play");
   render(
     <SearchProvider>
       <App />
@@ -199,7 +199,7 @@ describe("VG:should be able to save a word to the session storage", () => {
     expect(within(drawer).getByText("test")).toBeInTheDocument();
   });
 
-  test.only("should getItem from session storage", async () => {
+  test("should getItem from session storage", async () => {
     const getItemSpy = vi.spyOn(Storage.prototype, "getItem");
     afterEach(() => {
       getItemSpy.mockRestore();
