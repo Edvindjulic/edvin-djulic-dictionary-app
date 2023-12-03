@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   HStack,
   Heading,
@@ -77,6 +76,9 @@ export default function RenderSearchResult() {
                 <TabPanels>
                   {searchResult[0].meanings.map((meaning, index) => (
                     <TabPanel key={index}>
+                      <VStack align={"flex-start"} p={1}>
+                        <Text fontSize={"2xl"}>Definitions</Text>
+                      </VStack>
                       {meaning.definitions.map(
                         (definition, definitionIndex) => (
                           <VStack
@@ -85,32 +87,22 @@ export default function RenderSearchResult() {
                             p={1}
                             w={"100%"}
                           >
-                            <Box maxWidth={"90%"}>
-                              <Text>Definition: {definition.definition}</Text>
-                            </Box>
-                            {definition.synonyms.length > 0 && (
-                              <Text>
-                                Synonyms: {definition.synonyms.join(", ")}
-                              </Text>
-                            )}
-                            {definition.antonyms.length > 0 && (
-                              <Text>
-                                Antonyms: {definition.antonyms.join(", ")}
-                              </Text>
-                            )}
+                            <Text>{definition.definition}</Text>
                           </VStack>
                         )
                       )}
                       <VStack align="flex-start" mt={5} p={1}>
                         {meaning.synonyms.length > 0 && (
-                          <VStack align={'flex-start'}>
-                            <Text fontSize={'2xl'}>Synonyms</Text>
+                          <VStack align={"flex-start"}>
+                            <Text fontSize={"2xl"}>Synonyms</Text>
                             <Text> {meaning.synonyms.join(", ")}</Text>
                           </VStack>
                         )}
                         {meaning.antonyms.length > 0 && (
-                          <VStack align={'flex-start'}>
-                          <Text fontSize={'2xl'}>Antonmys: {meaning.antonyms.join(", ")}</Text>
+                          <VStack align={"flex-start"}>
+                            <Text fontSize={"2xl"}>
+                              Antonmys: {meaning.antonyms.join(", ")}
+                            </Text>
                           </VStack>
                         )}
                       </VStack>

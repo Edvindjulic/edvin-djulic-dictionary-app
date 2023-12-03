@@ -104,7 +104,7 @@ describe("should be able to see different meanings for different parts of speech
     const noun = await screen.findByRole("tab", { name: "noun" });
     expect(noun).toBeInTheDocument();
     await userEvent.click(noun);
-    const meaning = screen.getByText("Definition: A challenge, trial.");
+    const meaning = screen.getByText("A challenge, trial.");
     expect(meaning).toBeInTheDocument();
   });
 
@@ -120,7 +120,7 @@ describe("should be able to see different meanings for different parts of speech
     const verb = await screen.findByRole("tab", { name: "verb" });
     expect(verb).toBeInTheDocument();
     await userEvent.click(verb);
-    const meaning = screen.getByText("Definition: To challenge.");
+    const meaning = screen.getByText("To challenge.");
     expect(meaning).toBeInTheDocument();
   });
 });
