@@ -65,7 +65,7 @@ export default function RenderSearchResult() {
                 </Button>
               </HStack>
             </VStack>
-            <VStack h={"100vh"} w={"80%"} border={`1px solid ${bgColor}`}>
+            <VStack h={"100%"} w={"80%"} border={`1px solid ${bgColor}`}>
               <Tabs variant={"enclosed"} w={"100%"} align="center">
                 <TabList w={"100%"}>
                   {searchResult[0].meanings.map((meaning, index) => (

@@ -22,6 +22,11 @@ interface DrawerProps {
   children?: React.ReactNode;
 }
 
+// This component, using the Chakra UI Drawer component, displays the list of saved words.
+// isOpen, onClose, savedWords and removeWord are props passed from the App component (the parent).
+// isOpen and onClose are used to open and close the drawer.
+// The List component is used to display the list of saved words by mapping over the savedWords (an array of SearchResult objects).
+// For each SearchResult object, a ListItem is created with the word and a Button to remove the word from the list.
 export default function FavoriteDrawer({
   isOpen,
   onClose,
@@ -46,8 +51,7 @@ export default function FavoriteDrawer({
                     removeWord(word);
                     toast({
                       title: "Word removed",
-                      description:
-                        "You will no longer see it here",
+                      description: "You will no longer see it here",
                       status: "success",
                       duration: 9000,
                       isClosable: true,
@@ -60,7 +64,6 @@ export default function FavoriteDrawer({
             ))}
           </List>
         </DrawerBody>
-
         <DrawerFooter></DrawerFooter>
       </DrawerContent>
     </Drawer>
