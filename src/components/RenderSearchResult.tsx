@@ -17,15 +17,23 @@ import { useContext } from "react";
 import { SearchContext } from "../SearchContext";
 import AudioPlayer from "./AudioPlayer";
 
+// This component renders the search result.
 export default function RenderSearchResult() {
+  // Using the useContext hook to access the searchResult (array of SearchResult objects) and saveWord (function) from the SearchContext.
   const { searchResult, saveWord } = useContext(SearchContext);
+  // Using the useColorMode hook to access the colorMode (light or dark) from Chakra UI.
   const { colorMode } = useColorMode();
+  // Using the useToast hook to access the toast function from Chakra UI.
   const toast = useToast();
+  // Using optional to either get the first phonetic object with an audio property since some words have more than one phonetic object.
   const audioSource = searchResult?.[0]?.phonetics.find(
     (phonetic) => phonetic.audio
   );
+  // Depending on the color mode, the border color will change.
   const bgColor = colorMode === "light" ? "black" : "white";
 
+  // If the searchResult is an empty array, a message will be displayed.
+  // If the searchResult is not an empty array, the word, phonetic, audio player and save button will be displayed.
   return (
     <VStack w={"100%"} mt={10} mb={10}>
       {searchResult?.length === 0 ? (
@@ -88,7 +96,7 @@ export default function RenderSearchResult() {
                             p={1}
                             w={"100%"}
                           >
-                            <Box maxW={'90%'}>
+                            <Box maxW={"90%"}>
                               <Text>{definition.definition}</Text>
                             </Box>
                           </VStack>
