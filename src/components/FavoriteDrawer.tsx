@@ -1,4 +1,5 @@
 import {
+  Button,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
@@ -6,6 +7,7 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
+  HStack,
   List,
   ListItem,
 } from "@chakra-ui/react";
@@ -15,6 +17,7 @@ interface DrawerProps {
   isOpen: boolean;
   onClose: () => void;
   savedWords: SearchResult[];
+  removeWord: (word: SearchResult) => void;
   children?: React.ReactNode;
 }
 
@@ -22,6 +25,7 @@ export default function FavoriteDrawer({
   isOpen,
   onClose,
   savedWords,
+  removeWord,
 }: DrawerProps) {
   return (
     <Drawer isOpen={isOpen} placement="left" onClose={onClose} size={"sm"}>
@@ -29,11 +33,15 @@ export default function FavoriteDrawer({
       <DrawerContent alignItems={"center"}>
         <DrawerCloseButton />
         <DrawerHeader>Favorite words</DrawerHeader>
-
         <DrawerBody>
           <List>
             {savedWords.map((word, index) => (
-              <ListItem key={index}>{word.word}</ListItem>
+              <HStack key={index}>
+                <ListItem>{word.word}</ListItem>
+                <Button variant={"ghost"} onClick={() => removeWord(word)}>
+                  Remove
+                </Button>
+              </HStack>
             ))}
           </List>
         </DrawerBody>

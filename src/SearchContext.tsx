@@ -34,6 +34,7 @@ interface SearchContextValue {
   searchResult: SearchResult[] | null;
   fetchSearchResult: (word: string) => Promise<void>;
   saveWord: (word: SearchResult) => void;
+  removeWord: (word: SearchResult) => void;
   savedWords: SearchResult[];
 }
 
@@ -45,6 +46,7 @@ export const SearchContext = createContext<SearchContextValue>({
   searchResult: null,
   fetchSearchResult: () => Promise.resolve(),
   saveWord: () => {},
+  removeWord: () => {},
   savedWords: [],
 });
 
@@ -75,9 +77,12 @@ export default function SearchProvider({ children }: Props) {
       setSavedWords([...savedWords, word]);
     }
   };
+  const removeWord = (word: SearchResult) => {
+    setSavedWords(savedWords.filter(savedWord => savedWord.word !== word.word));
+  };
   return (
     <SearchContext.Provider
-      value={{ searchResult, fetchSearchResult, saveWord, savedWords }}
+      value={{ searchResult, fetchSearchResult, saveWord, removeWord, savedWords }}
     >
       {children}
     </SearchContext.Provider>

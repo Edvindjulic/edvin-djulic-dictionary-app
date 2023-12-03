@@ -10,13 +10,14 @@ interface MainContentProps {
 }
 
 export default function MainContent({ isOpen, onClose }: MainContentProps) {
-  const { savedWords } = useContext(SearchContext);
+  const { savedWords, removeWord } = useContext(SearchContext);
   return (
     <VStack>
       <FavoriteDrawer
         isOpen={isOpen}
         onClose={onClose}
         savedWords={savedWords}
+        removeWord={removeWord}
       />
       <RenderSearchResult />
     </VStack>
