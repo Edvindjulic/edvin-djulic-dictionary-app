@@ -1,7 +1,7 @@
 import { VStack } from "@chakra-ui/react";
 import { useContext } from "react";
 import { SearchContext } from "../SearchContext";
-import FavoriteDrawer from "./Drawer";
+import FavoriteDrawer from "./FavoriteDrawer";
 import RenderSearchResult from "./RenderSearchResult";
 
 interface MainContentProps {

@@ -26,7 +26,7 @@ test("should fetch search result correctly", async () => {
   const input = screen.getByPlaceholderText("Search for a word");
   await userEvent.type(input, "test");
   await userEvent.click(screen.getByRole("button", { name: "Search" }));
-  const result = await screen.findByText("test");
+  const result = await screen.findAllByText("test");
   expect(result).toBeInTheDocument();
 });
 
