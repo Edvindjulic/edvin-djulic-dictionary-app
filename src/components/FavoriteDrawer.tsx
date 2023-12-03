@@ -10,6 +10,7 @@ import {
   HStack,
   List,
   ListItem,
+  useToast,
 } from "@chakra-ui/react";
 import { SearchResult } from "../SearchContext";
 
@@ -27,6 +28,7 @@ export default function FavoriteDrawer({
   savedWords,
   removeWord,
 }: DrawerProps) {
+  const toast = useToast();
   return (
     <Drawer isOpen={isOpen} placement="left" onClose={onClose} size={"sm"}>
       <DrawerOverlay />
@@ -38,7 +40,20 @@ export default function FavoriteDrawer({
             {savedWords.map((word, index) => (
               <HStack key={index}>
                 <ListItem>{word.word}</ListItem>
-                <Button variant={"ghost"} onClick={() => removeWord(word)}>
+                <Button
+                  variant={"ghost"}
+                  onClick={() => {
+                    removeWord(word);
+                    toast({
+                      title: "Word removed",
+                      description:
+                        "You will no longer see it here",
+                      status: "success",
+                      duration: 9000,
+                      isClosable: true,
+                    });
+                  }}
+                >
                   Remove
                 </Button>
               </HStack>
