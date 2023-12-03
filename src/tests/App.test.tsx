@@ -228,7 +228,7 @@ describe("VG:should be able to save a word to the session storage", () => {
     expect(JSON.parse(storedValue!)).toEqual([savedWord]);
   });
 
-  test("should be able to remove a word from favorite words", async () => {
+  test("should be able to remove a word from sessionStorage", async () => {
     const getItemSpy = vi.spyOn(Storage.prototype, "getItem");
     afterEach(() => {
       getItemSpy.mockRestore();
