@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   HStack,
   Heading,
@@ -52,7 +53,8 @@ export default function RenderSearchResult() {
                     saveWord(searchResult[0]);
                     toast({
                       title: "Word saved",
-                      description: "You can find it by clicking Show favorite words",
+                      description:
+                        "You can find it by clicking Show favorite words",
                       status: "success",
                       duration: 9000,
                       isClosable: true,
@@ -63,7 +65,7 @@ export default function RenderSearchResult() {
                 </Button>
               </HStack>
             </VStack>
-            <VStack h={'100vh'} w={"95%"} border={`1px solid ${bgColor}`}>
+            <VStack h={"100vh"} w={"80%"} border={`1px solid ${bgColor}`}>
               <Tabs variant={"enclosed"} w={"100%"} align="center">
                 <TabList w={"100%"}>
                   {searchResult[0].meanings.map((meaning, index) => (
@@ -78,11 +80,14 @@ export default function RenderSearchResult() {
                       {meaning.definitions.map(
                         (definition, definitionIndex) => (
                           <VStack
-                            align="start"
+                            align="flex-start"
                             key={definitionIndex}
                             p={1}
+                            w={"100%"}
                           >
-                            <Text>Definition: {definition.definition}</Text>
+                            <Box maxWidth={"90%"}>
+                              <Text>Definition: {definition.definition}</Text>
+                            </Box>
                             {definition.synonyms.length > 0 && (
                               <Text>
                                 Synonyms: {definition.synonyms.join(", ")}
@@ -96,12 +101,17 @@ export default function RenderSearchResult() {
                           </VStack>
                         )
                       )}
-                      <VStack align="start">
+                      <VStack align="flex-start" mt={5} p={1}>
                         {meaning.synonyms.length > 0 && (
-                          <Text> Synonyms: {meaning.synonyms.join(", ")}</Text>
+                          <VStack align={'flex-start'}>
+                            <Text fontSize={'2xl'}>Synonyms</Text>
+                            <Text> {meaning.synonyms.join(", ")}</Text>
+                          </VStack>
                         )}
                         {meaning.antonyms.length > 0 && (
-                          <Text>Antonmys: {meaning.antonyms.join(", ")}</Text>
+                          <VStack align={'flex-start'}>
+                          <Text fontSize={'2xl'}>Antonmys: {meaning.antonyms.join(", ")}</Text>
+                          </VStack>
                         )}
                       </VStack>
                     </TabPanel>
