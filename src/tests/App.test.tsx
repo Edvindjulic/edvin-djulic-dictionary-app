@@ -17,7 +17,7 @@ const server = setupServer(
 beforeAll(() => server.listen());
 afterAll(() => server.close());
 
-test("should fetch search result correctly", async () => {
+test("G:should fetch search result correctly", async () => {
   render(
     <SearchProvider>
       <App />
@@ -26,11 +26,22 @@ test("should fetch search result correctly", async () => {
   const input = screen.getByPlaceholderText("Search for a word");
   await userEvent.type(input, "test");
   await userEvent.click(screen.getByRole("button", { name: "Search" }));
-  const result = await screen.findAllByText("test");
+  await screen.findByRole("heading");
+  expect(screen.getByRole("heading")).toHaveTextContent("test");
+});
+
+test("G:should display error when searching with empty value", async () => {
+  render(
+    <SearchProvider>
+      <App />
+    </SearchProvider>
+  )
+  await userEvent.click(screen.getByRole("button", { name: "Search" }));
+  const result = await screen.findByText("Required");
   expect(result).toBeInTheDocument();
 });
 
-test("should display error message when no result is found", async () => {
+test("G:should display error message when no result is found", async () => {
   server.use(
     rest.get(
       "https://api.dictionaryapi.dev/api/v2/entries/en/aweirdword",
@@ -53,7 +64,7 @@ test("should display error message when no result is found", async () => {
   expect(result).toBeInTheDocument();
 });
 
-test("G: should be able to call play method on audio", async () => {
+test("G:should be able to call play method on audio", async () => {
   //Test passes but doesnt check if audio actually plays
   const spy = vi.spyOn(window.HTMLMediaElement.prototype, "play");
   render(
@@ -104,7 +115,7 @@ describe("should be able to see different meanings for different parts of speech
   });
 });
 
-describe("VG: should be able to switch between dark and light theme", () => {
+describe("VG:should be able to switch between dark and light theme", () => {
   test("should display dark mode", async () => {
     render(
       <ChakraProvider theme={theme}>
@@ -146,7 +157,7 @@ test("should be able to open up drawer for favorite words", async () => {
   expect(favoriteWords).toBeInTheDocument();
 });
 
-test("should be able to save a word to favorite words", async () => {
+test("VG:should be able to save a word to favorite words", async () => {
   render(
     <SearchProvider>
       <App />

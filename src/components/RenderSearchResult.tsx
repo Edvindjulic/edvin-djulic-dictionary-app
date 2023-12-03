@@ -1,6 +1,7 @@
 import {
   Button,
   HStack,
+  Heading,
   Tab,
   TabList,
   TabPanel,
@@ -34,7 +35,7 @@ export default function RenderSearchResult() {
               <HStack w={700} margin={"auto"} border={`1px solid ${bgColor}`}>
                 <VStack w={"50%"} h={"100%"}>
                   <HStack>
-                    <Text fontSize="3xl">{searchResult[0].word}</Text>
+                    <Heading as="h2">{searchResult[0].word}</Heading>
                     <Button
                       variant={"ghost"}
                       onClick={() => saveWord(searchResult[0].word)}
