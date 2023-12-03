@@ -16,6 +16,7 @@ import App from "../App";
 import SearchProvider from "../SearchContext";
 import mockWord from "./mockWord.json";
 
+// Mocking the fetch API. This is a global mock, used in all tests.
 const server = setupServer(
   rest.get(
     "https://api.dictionaryapi.dev/api/v2/entries/en/test",
@@ -49,6 +50,7 @@ test("G:should display error when searching with empty value", async () => {
   expect(result).toBeInTheDocument();
 });
 
+// Uses a 404 response from the server to test the error message.
 test("G:should display error message when no result is found", async () => {
   server.use(
     rest.get(
@@ -73,7 +75,7 @@ test("G:should display error message when no result is found", async () => {
 });
 
 test("G:should be able to call play method on audio", async () => {
-  //Test passes but doesnt check if audio actually plays
+  // Mocking the play method on the HTMLMediaElement.prototype.
   const spy = vi.spyOn(HTMLMediaElement.prototype, "play");
   render(
     <SearchProvider>
