@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   HStack,
   Heading,
@@ -87,7 +88,9 @@ export default function RenderSearchResult() {
                             p={1}
                             w={"100%"}
                           >
-                            <Text>{definition.definition}</Text>
+                            <Box maxW={'90%'}>
+                              <Text>{definition.definition}</Text>
+                            </Box>
                           </VStack>
                         )
                       )}
@@ -95,7 +98,9 @@ export default function RenderSearchResult() {
                         {meaning.synonyms.length > 0 && (
                           <VStack align={"flex-start"}>
                             <Text fontSize={"2xl"}>Synonyms</Text>
-                            <Text> {meaning.synonyms.join(", ")}</Text>
+                            <Box maxW={"60%"}>
+                              <Text> {meaning.synonyms.join(", ")}</Text>
+                            </Box>
                           </VStack>
                         )}
                         {meaning.antonyms.length > 0 && (
