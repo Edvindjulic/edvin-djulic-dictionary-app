@@ -31,17 +31,9 @@ export default function RenderSearchResult() {
         searchResult &&
         audioSource && (
           <VStack w={"100%"}>
-            <VStack h={"100%"}>
+            <VStack h={"100%"} w={'60%'} p={5} border={`1px solid ${bgColor}`}>
               <HStack>
                 <Heading as="h2">{searchResult[0].word}</Heading>
-                <Button
-                  variant={"ghost"}
-                  onClick={() => saveWord(searchResult[0])}
-                >
-                  Save
-                </Button>
-              </HStack>
-              <HStack spacing={5}>
                 <Text fontSize="xl">
                   {" "}
                   {"[ "}
@@ -49,10 +41,18 @@ export default function RenderSearchResult() {
                     searchResult[0].phonetics[1]?.text}
                   {" ]"}
                 </Text>
+              </HStack>
+              <HStack spacing={5}>
                 {audioSource && <AudioPlayer src={audioSource.audio} />}
+                <Button
+                  variant={"ghost"}
+                  onClick={() => saveWord(searchResult[0])}
+                >
+                  Save
+                </Button>
               </HStack>
             </VStack>
-            <VStack h={"100%"} border={`1px solid ${bgColor}`}>
+            <VStack h={"100%"} w={'60%'} border={`1px solid ${bgColor}`}>
               <Tabs variant={"enclosed"} w={"100%"} align="center">
                 <TabList w={"100%"}>
                   {searchResult[0].meanings.map((meaning, index) => (

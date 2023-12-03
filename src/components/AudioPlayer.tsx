@@ -1,4 +1,6 @@
 import { Button, HStack } from "@chakra-ui/react";
+import { faVolumeUp } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRef, useState } from "react";
 
 interface AudioPlayerProps {
@@ -33,7 +35,7 @@ export default function AudioPlayer({ src }: AudioPlayerProps) {
         onClick={togglePlayPause}
         aria-label={isPlaying ? "Pause" : "Play"}
       >
-        {isPlaying ? "Pause" : "Play"}
+        <FontAwesomeIcon icon={faVolumeUp} />
       </Button>
     </HStack>
   );
